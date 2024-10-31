@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}List{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/list.css' %}">{% endblock %}
+{% block main %}
+<div class="main">
+{% if user.is_staff %}
+{% if admin_data %}
+<table border="1">
+    <thead>
+        <tr>
+            <th class="mobile">S.No</th>
+            <th>user</th>
+            <th class="mobile">Date</th>
+            <th class="mobile">Time</th>
+            <th>Input</th>
+            <th>output</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in admin_data %}
+        <tr>
+            <td class="mobile">{{forloop.counter}}</td>
+            <td>{{data.user.username}}</td>
+            <td class="mobile">{{data.date}}</td>
+            <td class="mobile">{{data.time}}</td>
+            <td><a href="http://127.0.0.1:8000/media/{{data.image}}"><img src="http://127.0.0.1:8000/media/{{data.image}}" style="width: 50px;"/></a></td>
+            <td>{{data.output}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p> No data available </p>
+{% endif %}
+{% else %}
+    {% if user_data %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th class="mobile">S.No</th>
+                <th >Date</th>
+                <th class="mobile">Time</th>
+                <th>Input</th>
+                <th>output</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in user_data %}
+            <tr>
+                <td class="mobile">{{forloop.counter}}</td>
+                <td >{{data.date}}</td>
+                <td class="mobile">{{data.time}}</td>
+                <td><a href="http://127.0.0.1:8000/media/{{data.image}}"><img src="http://127.0.0.1:8000/media/{{data.image}}" style="width: 50px;"/></a></td>
+                <td>{{data.output}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p> No data available </p>
+    {% endif %}
+{% endif %}
+</div>
+{% endblock %}

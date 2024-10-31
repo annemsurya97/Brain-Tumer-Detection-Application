@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block css %}{% endblock  %}
+
+</head>
+<body>
+    <div class="navbar">
+        <h2><a style='text-decoration:none;color:#ffff' href="/">{{navbar.Title}}</a></h2>
+        <ul class='menu-list'>
+            <li><a href="{% url 'Home' %}">Home</a></li>
+            {% if user.is_authenticated %}
+            {% if user.is_staff %}
+            <li><a href="{% url 'user' %}">Users</a></li>
+            <li><a href="{% url 'list' %}">Data</a></li>
+            {% else %}
+            <li><a href="{% url 'predict' %}">Test</a></li>
+            <li><a href="{% url 'list' %}">Recent Search</a></li>
+            {% endif %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+        </ul>
+        <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <button class="closebtn" onclick="closeSidebar()">X</button>
+        <ul>
+            <li><a href="{% url 'Home' %}">Home</a></li>
+            {% if user.is_authenticated %}
+            {% if user.is_staff %}
+            <li><a href="{% url 'user' %}">Users</a></li>
+            <li><a href="{% url 'list' %}">Data</a></li>
+            {% else %}
+            <li><a href="{% url 'predict' %}">Test</a></li>
+            <li><a href="{% url 'list' %}">Recent Search</a></li>
+            {% endif %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %} 
+        </ul>
+    </div>
+    <div id="main">
+        {% block  main %}{% endblock  %}
+    </div>
+</div>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.style.transform === 'translateX(0%)') {
+                sidebar.style.transform = 'translateX(100%)';
+            } else {
+                sidebar.style.transform = 'translateX(0%)';
+            }
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').style.transform = 'translateX(100%)';
+        }    
+    </script>
+</body>
+</html>

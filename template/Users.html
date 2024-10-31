@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Register {% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/list.css' %}">{% endblock %}
+{% block main %}
+<div class="main">
+    {% if data %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th  class="mobile">status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in data %}
+            <tr>
+                <td >{{forloop.counter}}</td>
+                <td>{{data.username}}</td>
+                <td class="mobile">
+                    {% if data.is_active %}
+                    active
+                    {% else %}
+                    Deactive
+                    {% endif %}
+                </td>
+                <td>
+                    {% if data.is_active %}
+                    <a href="{% url 'Deactivate' id=data.id %}">Deactivate</a>
+                    {% else %}
+                    <a href="{% url 'activate' id=data.id %}">Activate</a>
+                    {% endif %}
+                    | <a href="{% url 'delete' id=data.id %}">Delete</a></td>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p> No data available </p>
+    {% endif %}
+</div>
+{% endblock %}

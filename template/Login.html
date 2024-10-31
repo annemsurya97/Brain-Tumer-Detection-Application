@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login Page{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/logincss.css' %}">
+{% endblock %}
+{% block main %}
+<div class="login">
+    <div>
+        <img class="image" src="{% static 'images/pg_machinelearning101_may23.webp' %}">
+    </div>
+    <div class="inFormBackground">
+        <div class="inLoginForm">
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="tab-container">
+                    <button class="tab tab--1">User</button>
+                    <button class="tab tab--2"><a style="color:#fff;" href="{% url 'Admin' %}">Admin</a></button>
+                    <div class="indicator"></div>
+                </div>
+                <div class="inputGroup">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" placeholder="Enter Username" id="name">
+                </div>
+                <div class="inputGroup">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" placeholder="Enter Password">
+                </div>
+                <button class="submitForm">Log In</button>
+            </form>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <h3 class="message">{{ message }}</h3>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

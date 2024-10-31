@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/register.css' %}">{% endblock %}
+{% block main %}
+<style>
+    body{
+        overflow: hidden;
+    }
+</style>
+<div class="inFormBackground">
+    <div class="inLoginForm">
+        <form action="{% url 'predict' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+                <div class="inputGroup">
+                    <label for="name">File </label>
+                    <input type="file" id="name" name="image" placeholder="Enter Name" required style="cursor: pointer;">
+                </div>
+            <button class="submitForm" style="margin-left:200px">Predict</button>
+        </form>
+        <div >
+            {% if output %}
+            <div style="display: flex;align-items:center;justify-content:center"><p>output:</p><h4 style="color: rgb(247, 123, 7);margin-left:30px">{{output}}</h4></div>
+            <img style="display: flex;margin-left:150px;width:200px" src="http://127.0.0.1:8000/media/{{image}}"/>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
